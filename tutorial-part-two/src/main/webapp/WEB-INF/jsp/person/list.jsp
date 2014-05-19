@@ -17,11 +17,14 @@
 </div>
 <h1><spring:message code="person.list.page.title"/></h1>
 <a href="/person/create"><spring:message code="person.create.link.label"/></a>
+<div class="todoList">
 <table>
     <thead>
     <tr>
         <td><spring:message code="person.label.lastName"/></td>
         <td><spring:message code="person.label.firstName"/></td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
     </tr>
     </thead>
     <tbody>
@@ -35,5 +38,6 @@
     </c:forEach>
     </tbody>
 </table>
+</div>
 </body>
 </html>
