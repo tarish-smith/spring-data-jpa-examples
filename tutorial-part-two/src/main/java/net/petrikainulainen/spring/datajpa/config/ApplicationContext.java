@@ -9,10 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -29,15 +26,13 @@ import java.util.Properties;
  */
 @Configuration
 @ComponentScan(basePackages = {"net.petrikainulainen.spring.datajpa.controller",
-        "net.petrikainulainen.spring.datajpa.service"})
+                               "net.petrikainulainen.spring.datajpa.service"
+})
 @EnableTransactionManagement
 @EnableWebMvc
 @ImportResource("classpath:applicationContext.xml")
 @PropertySource("classpath:application.properties")
 public class ApplicationContext {
-
-    private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/jsp/";
-    private static final String VIEW_RESOLVER_SUFFIX = ".jsp";
 
     private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
     private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
@@ -106,16 +101,5 @@ public class ApplicationContext {
         messageSource.setUseCodeAsDefaultMessage(Boolean.parseBoolean(environment.getRequiredProperty(PROPERTY_NAME_MESSAGESOURCE_USE_CODE_AS_DEFAULT_MESSAGE)));
 
         return messageSource;
-    }
-
-    @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix(VIEW_RESOLVER_PREFIX);
-        viewResolver.setSuffix(VIEW_RESOLVER_SUFFIX);
-
-        return viewResolver;
     }
 }

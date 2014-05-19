@@ -14,7 +14,7 @@
         Configures the location of static resources such as css files.
         Requires Spring Framework 3.0 or higher.
     -->
-    <mvc:resources mapping="/static/**" location="/static/"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
 
     <!--
         Ensures that dispatcher servlet can be mapped to '/' and static resources
@@ -22,6 +22,39 @@
         3.0 or higher.
     -->
     <mvc:default-servlet-handler/>
+
+    <!-- **************************************************************** -->
+    <!--  THYMELEAF-SPECIFIC ARTIFACTS                                    -->
+    <!--  TemplateResolver <- TemplateEngine <- ViewResolver              -->
+    <!-- **************************************************************** -->
+    <bean id="templateResolver"
+          class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <property name="prefix" value="/WEB-INF/templates/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML5" />
+        <!-- Template cache is set to false for dev changes (default is true). -->
+        <property name="cacheable" value="false" />
+    </bean>
+
+    <bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="viewResolvers">
+            <list>
+                <!-- Used here for 'xml' views  -->
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+                    <property name="order" value="1"/>
+                </bean>
+                <!-- Used for Thymeleaf views  -->
+                <bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+                    <property name="templateEngine" ref="templateEngine" />
+                    <property name="order" value="2"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
 
     <!--
         Configures Spring Data JPA and sets the base package of my DAOs.
