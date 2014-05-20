@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css"/>
+    <title th:text="#{spring.data.jpa.example.title}">Spring Example</title>
+</head>
+<body>
+    <h1 th:text="#{person.create.page.title}">person</h1>
+    <a th:href="@{/}" th:text="#{person.list.link.label}">list</a>
+    <div>
+        <form th:action="@{/person/create}" th:object="${person}" method="post">
+            <div>
+                <label for="firstName" th:text="#{person.label.firstName}">:</label>
+                <input id="firstName" th:field="*{firstName}" type="text"/>
+                <div class="error" th:errors="*{firstName}">error</div>
+            </div>
+            <div>
+                <label for="lastName" th:text="#{person.label.lastName}">:</label>
+                <input id="lastName" th:field="*{lastName}" type="text"/>
+                <div class="error" th:errors="*{lastName}">error</div>
+            </div>
+            <button type="submit" th:text="#{person.create.page.submit.label}">submit</button>
+        </form>
+        <div>
+        </div>
+    </div>
+</body>
+</html>
